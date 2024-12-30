@@ -1,0 +1,5 @@
+service:
+  port: ":8080"
+
+database:
+  dataSourceName: "root:Docker123!@tcp(localhost:3306)/forumdb?parseTime=true"
