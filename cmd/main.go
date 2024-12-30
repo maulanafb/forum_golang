@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +14,7 @@ import (
 
 func main() {
 	r := gin.Default()
+
 	var (
 		cfg *configs.Config
 	)
@@ -24,20 +26,29 @@ func main() {
 	)
 
 	if err != nil {
-		log.Fatal("Gagal membaca konfigurasi" + err.Error())
+		log.Fatal("Gagal membaca konfigurasi: " + err.Error())
 	}
 	cfg = configs.Get()
 
 	db, err := internalsql.Connect(cfg.Database.DataSourceName)
-
 	if err != nil {
-		log.Fatal("Gagal terhubung ke database" + err.Error())
+		log.Fatal("Gagal terhubung ke database: " + err.Error())
 	}
 
+	// add config
 	membershipRepo := membershipRepo.NewRepository(db)
-	membershipService := membershipSvc.NewService(membershipRepo)
+	membershipService := membershipSvc.NewService(cfg, membershipRepo)
 	membershipHandler := memberships.NewHandler(r, membershipService)
 
+	// Register routes
 	membershipHandler.RegisterRoutes()
+
+	// Menampilkan daftar routes di konsol
+	fmt.Println("Registered Routes:")
+	for _, route := range r.Routes() {
+		fmt.Printf("%s %s\n", route.Method, route.Path)
+	}
+
+	// Jalankan server
 	r.Run(cfg.Service.Port)
 }

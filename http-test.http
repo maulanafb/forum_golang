@@ -1,0 +1,19 @@
+### Register Test
+POST http://localhost:8080/memberships/sign-up
+Content-Type: application/json
+
+{
+    "username": "newuser",
+    "password": "newpassword",
+    "email": "newuser@example.com"
+}
+
+### Login Test
+POST http://localhost:8080/memberships/login
+Content-Type: application/json
+
+{
+    "email": "maulana@maulana.com",
+    "password": "password"
+}
+

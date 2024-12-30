@@ -3,6 +3,7 @@ package memberships
 import (
 	"context"
 
+	"github.com/maulanafb/forum_golang/internal/configs"
 	"github.com/maulanafb/forum_golang/internal/model/memberships"
 )
 
@@ -13,11 +14,13 @@ type MembershipRepository interface {
 }
 
 type service struct {
+	cfg            *configs.Config
 	membershipRepo MembershipRepository
 }
 
-func NewService(membershipRepo MembershipRepository) *service {
+func NewService(cfg *configs.Config, membershipRepo MembershipRepository) *service {
 	return &service{
-		membershipRepo,
+		cfg:            cfg,
+		membershipRepo: membershipRepo,
 	}
 }
