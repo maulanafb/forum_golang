@@ -1,3 +1,4 @@
+-- migrate:up
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -8,3 +9,6 @@ CREATE TABLE IF NOT EXISTS users (
     updated_by VARCHAR(255) NOT NULL DEFAULT 'system',
     deleted_at TIMESTAMP
 );
+
+-- migrate:down
+DROP TABLE IF EXISTS users;

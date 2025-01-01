@@ -13,7 +13,7 @@ POST http://localhost:8080/memberships/login
 Content-Type: application/json
 
 {
-    "email": "maulana@maulana.com",
-    "password": "password"
+    "email": "newuser@example.com",
+    "password": "newpassword"
 }
 

@@ -22,7 +22,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 	err := h.membershipService.SignUp(ctx, request)
 	if err != nil {
 		log.Printf("Error in membershipService.SignUp: %v\n", err)
-		c.JSON(500, gin.H{"error di handlers": err.Error()})
+		c.JSON(http.StatusConflict, gin.H{"error di handlers": err.Error()})
 		return
 	}
 
