@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
+	posts "github.com/maulanafb/forum_golang/internal/handlers/posts"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/maulanafb/forum_golang/internal/configs"
 	"github.com/maulanafb/forum_golang/internal/handlers/memberships"
 	membershipRepo "github.com/maulanafb/forum_golang/internal/repository/memberships"
+	postRepo "github.com/maulanafb/forum_golang/internal/repository/posts"
 	membershipSvc "github.com/maulanafb/forum_golang/internal/service/memberships"
+	postSvc "github.com/maulanafb/forum_golang/internal/service/posts"
 	"github.com/maulanafb/forum_golang/pkg/internalsql"
 )
 
@@ -35,20 +38,25 @@ func main() {
 		log.Fatal("Gagal terhubung ke database: " + err.Error())
 	}
 
-	// add config
-	membershipRepo := membershipRepo.NewRepository(db)
-	membershipService := membershipSvc.NewService(cfg, membershipRepo)
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+
+	postRepository := postRepo.NewRepository(db)
+
+	postService := postSvc.NewService(cfg, postRepository)
+	postHandler := posts.NewHandler(r, postService)
+	postHandler.RegisterRoutes()
+	membershipRepository := membershipRepo.NewRepository(db)
+
+	membershipService := membershipSvc.NewService(cfg, membershipRepository)
 	membershipHandler := memberships.NewHandler(r, membershipService)
 
-	// Register routes
 	membershipHandler.RegisterRoutes()
 
-	// Menampilkan daftar routes di konsol
 	fmt.Println("Registered Routes:")
 	for _, route := range r.Routes() {
 		fmt.Printf("%s %s\n", route.Method, route.Path)
 	}
 
-	// Jalankan server
 	r.Run(cfg.Service.Port)
 }

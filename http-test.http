@@ -17,3 +17,13 @@ Content-Type: application/json
     "password": "newpassword"
 }
 
+### Create Post Test
+POST http://localhost:8080/posts/create-post
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzU5OTAzMjMsImlkIjoxLCJ1c2VybmFtZSI6Im5ldXVzZXIifQ.Bh9vUsrm82NAF2ua3nm1FRCbZ5TqC_Sxsk1IXdR4kS4
+Content-Type: application/json
+
+{
+  "postTitle": "New Post",
+  "postContent": "This is a new post",
+  "postHashtag": ["General","New"]
+}

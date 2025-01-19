@@ -14,7 +14,6 @@ type membershipService interface {
 
 type Handler struct {
 	*gin.Engine
-
 	membershipService membershipService
 }
 

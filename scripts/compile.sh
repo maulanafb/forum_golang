@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Compile aplikasi Go
 echo "Meng-compile aplikasi Go..."
 go build -o app cmd/main.go
 

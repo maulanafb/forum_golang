@@ -1,6 +1,4 @@
-# Makefile untuk Proyek Anda
 
-# Migrasi database ke atas untuk lingkungan production
 migrate-up:
 	./scripts/migrate-up.sh
 
